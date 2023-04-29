@@ -6,7 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./post-create.component.css'],
 })
 export class PostCreateComponent {
+  newPost = 'No content';
+
   onAddPost() {
-    console.log('onAddPost');
+    this.newPost = 'User Post';
   }
 }
