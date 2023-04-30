@@ -19,5 +19,6 @@ export class PostCreateComponent {
       return;
     }
     this.service.addPost(form.value);
+    form.resetForm();
   }
 }
