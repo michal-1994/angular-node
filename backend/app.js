@@ -8,7 +8,7 @@ const app = express();
 
 mongoose
   .connect(
-    `mongodb+srv://michal:${process.env.PASS}@cluster0.b8gq0tj.mongodb.net/`
+    `mongodb+srv://michal:${process.env.PASSWORD}@cluster0.b8gq0tj.mongodb.net/`
   )
   .then(() => {
     console.log("Connected");
