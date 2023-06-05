@@ -8,7 +8,7 @@ const app = express();
 
 mongoose
   .connect(
-    `mongodb+srv://michal:${process.env.PASSWORD}@cluster0.b8gq0tj.mongodb.net/`
+    `mongodb+srv://michal:${process.env.PASSWORD}@cluster0.b8gq0tj.mongodb.net/posts`
   )
   .then(() => {
     console.log("Connected");
@@ -38,7 +38,7 @@ app.post("/api/posts", (req, res, next) => {
     title: req.body.title,
     content: req.body.content,
   });
-  console.log(post);
+  post.save();
   res.status(201).json({
     message: "Post added successfully",
   });
