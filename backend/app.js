@@ -8,7 +8,7 @@ const app = express();
 
 mongoose
   .connect(
-    `mongodb+srv://michal:${process.env.PASSWORD}@cluster0.b8gq0tj.mongodb.net/posts`
+    `mongodb+srv://michal:${process.env.PASSWORD}@cluster0.b8gq0tj.mongodb.net/data`
   )
   .then(() => {
     console.log("Connected");
@@ -51,6 +51,14 @@ app.get("/api/posts", (req, res, next) => {
       posts: documents,
     });
   });
+});
+
+app.delete("/api/posts/:id", (req, res, next) => {
+  Post.deleteOne({
+    _id: req.params.id
+  }).then((result) => {
+    res.status(200).json({ message: "Post deleted!" });
+  })
 });
 
 module.exports = app;
