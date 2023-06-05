@@ -27,8 +27,6 @@ export class PostsService {
         })
       )
       .subscribe((transformedPosts) => {
-        console.log(transformedPosts);
-
         this.posts = transformedPosts;
         this.postsUpdated.next([...this.posts]);
       });
@@ -38,21 +36,23 @@ export class PostsService {
     return this.postsUpdated.asObservable();
   }
 
-  addPost(post: Post) {
+  addPost(title: string, content: string) {
+    const post: Post = { id: null, title: title, content: content };
     this.http
-      .post<{ message: string }>(this.postsApi, post)
+      .post<{ message: string; postId: string }>(this.postsApi, post)
       .subscribe((responseData) => {
-        console.log(responseData.message);
+        const id = responseData.postId;
+        post.id = id;
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
       });
   }
 
   deletePost(postId: string) {
-    this.http
-      .delete(this.postsApi + postId)
-      .subscribe(() => {
-        console.log('Deleted!');
-      });
+    this.http.delete(this.postsApi + postId).subscribe(() => {
+      const updatedPosts = this.posts.filter((post) => post.id !== postId);
+      this.posts = updatedPosts;
+      this.postsUpdated.next([...this.posts]);
+    });
   }
 }
