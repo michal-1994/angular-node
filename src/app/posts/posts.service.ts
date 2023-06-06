@@ -54,6 +54,17 @@ export class PostsService {
       });
   }
 
+  updatePost(id: string, title: string, content: string) {
+    const post: Post = {
+      id: id,
+      title: title,
+      content: content,
+    };
+    this.http.patch(this.postsApi + id, post).subscribe((response) => {
+      console.log(response);
+    });
+  }
+
   deletePost(postId: string) {
     this.http.delete(this.postsApi + postId).subscribe(() => {
       const updatedPosts = this.posts.filter((post) => post.id !== postId);
