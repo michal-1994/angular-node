@@ -1,9 +1,13 @@
 <mat-toolbar color="primary">
-  <span>AngularNode</span>
+  <span>
+    <a routerLink="/"> AngularNode </a>
+  </span>
+  <span class="spacer"></span>
   <ul>
     <li>
-      <a routerLink="/" routerLinkActive="router-link-active">Home</a>
-      <a routerLink="/create" routerLinkActive="router-link-active">New Post</a>
+      <a mat-button routerLink="/create" routerLinkActive="mat-accent"
+        >New Post</a
+      >
     </li>
   </ul>
 </mat-toolbar>
