@@ -18,6 +18,9 @@
       </button>
       <input type="file" #filePicker (change)="onImagePicked($event)" />
     </div>
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+      <img [src]="imagePreview" [alt]="form.value.title" />
+    </div>
     <mat-form-field>
       <textarea
         matInput

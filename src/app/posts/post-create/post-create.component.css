@@ -18,4 +18,15 @@ mat-card {
 
 input[type="file"] {
   visibility: hidden;
+  margin-bottom: 20px;
+}
+
+.image-preview {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.image-preview img {
+  width: 100%;
+  object-fit: contain;
 }
