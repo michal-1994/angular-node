@@ -38,8 +38,8 @@ router.post(
       res.status(201).json({
         message: "Post added successfully",
         post: {
-          id: createdPost._id,
           ...createdPost,
+          id: createdPost._id,
         },
       });
     });
