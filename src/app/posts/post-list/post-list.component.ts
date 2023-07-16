@@ -14,7 +14,8 @@ export class PostListComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
 
   totalPosts: number = 10;
-  postPerPage: number = 2;
+  pageSize: number = 2;
+  currentPage: number = 1;
   pageSizeOptions: number[] = [1, 2, 5, 10];
 
   private postsSub: Subscription;
@@ -23,7 +24,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = true;
-    this.service.getPosts();
+    this.service.getPosts(this.pageSize, 1);
     this.postsSub = this.service
       .getPostUpdateListener()
       .subscribe((posts: Post[]) => {
@@ -33,7 +34,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   onChangedPage(pageData: PageEvent) {
-    console.log(pageData);
+    this.currentPage = pageData.pageIndex + 1;
+    this.pageSize = pageData.pageSize;
+    this.service.getPosts(this.pageSize, this.currentPage);
   }
 
   onDelete(postId: string) {
