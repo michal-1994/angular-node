@@ -36,7 +36,6 @@ export class PostsService {
         })
       )
       .subscribe((transformedPostData) => {
-        console.log(transformedPostData);
         this.posts = transformedPostData.posts;
         this.postsUpdated.next({
           posts: [...this.posts],
@@ -55,6 +54,7 @@ export class PostsService {
       title: string;
       content: string;
       imagePath: string;
+      creator: string;
     }>(this.postsApi + id);
   }
 
@@ -84,6 +84,7 @@ export class PostsService {
         title: title,
         content: content,
         imagePath: image,
+        creator: null,
       };
     }
     this.http.patch(this.postsApi + id, postData).subscribe((response) => {

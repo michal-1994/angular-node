@@ -8,7 +8,7 @@
       <img [src]="post.imagePath" [alt]="post.title" />
     </div>
     <p>{{ post.content }}</p>
-    <mat-action-row *ngIf="userIsAuthenticated">
+    <mat-action-row *ngIf="userIsAuthenticated && userId === post.creator">
       <button mat-button color="accent" [routerLink]="['/edit', post.id]">
         EDIT
       </button>
