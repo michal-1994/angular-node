@@ -12,6 +12,7 @@ export class AuthService {
   private token: string;
   private isAuthenticated: boolean = false;
   private authStatusListener = new Subject<boolean>();
+  private tokenTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -29,22 +30,27 @@ export class AuthService {
 
   createUser(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
-    this.http
-      .post(this.postsApi + 'signup', authData)
-      .subscribe((response) => {
-        this.router.navigate(['/']);
-      });
+    this.http.post(this.postsApi + 'signup', authData).subscribe((response) => {
+      this.router.navigate(['/']);
+    });
   }
 
   login(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
     this.http
-      .post<{ token: string }>(this.postsApi + 'login', authData)
+      .post<{ token: string; expiresIn: number }>(
+        this.postsApi + 'login',
+        authData
+      )
       .subscribe((response) => {
         console.log(response);
         const token = response.token;
         this.token = token;
         if (token) {
+          const expiresInDuration = response.expiresIn;
+          this.tokenTimer = setTimeout(() => {
+            this.logout();
+          }, expiresInDuration * 1000);
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
           this.router.navigate(['/']);
@@ -57,5 +63,6 @@ export class AuthService {
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     this.router.navigate(['/']);
+    clearTimeout(this.tokenTimer);
   }
 }
