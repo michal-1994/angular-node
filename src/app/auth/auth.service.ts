@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AuthData } from './auth-data.model';
+import { environment } from 'src/environment/environment';
+
+const BACKEND_URL = environment.apiUrl + '/user/';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly postsApi: string = 'http://localhost:3000/api/user/';
   private token: string;
   private isAuthenticated: boolean = false;
   private authStatusListener = new Subject<boolean>();
@@ -35,7 +37,7 @@ export class AuthService {
 
   createUser(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
-    this.http.post(this.postsApi + 'signup', authData).subscribe(
+    this.http.post(BACKEND_URL + '/signup', authData).subscribe(
       () => {
         this.router.navigate(['/']);
       },
@@ -49,7 +51,7 @@ export class AuthService {
     const authData: AuthData = { email: email, password: password };
     this.http
       .post<{ token: string; expiresIn: number; userId: string }>(
-        this.postsApi + 'login',
+        BACKEND_URL + '/login',
         authData
       )
       .subscribe(
