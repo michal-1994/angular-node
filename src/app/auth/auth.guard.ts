@@ -14,7 +14,7 @@ export class AuthGuard {
   canActivate(): boolean {
     const isAuth = this.service.getIsAuth();
     if (!isAuth) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
     }
     return true;
   }
